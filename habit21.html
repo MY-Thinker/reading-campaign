@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>21天阅读习惯养成</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif; }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(180deg,#4facfe 0%,#00f2fe 100%);
+        }
+        .panel {
+            width: 90%;
+            max-width: 420px;
+            background: rgba(255,255,255,0.96);
+            padding: 28px 22px 32px;
+            border-radius: 20px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            color: #15202b;
+            margin-bottom: 22px;
+        }
+        .menu { display: flex; flex-direction: column; gap: 16px; }
+        .item {
+            padding: 14px 18px;
+            border-radius: 14px;
+            background: linear-gradient(90deg,#4facfe,#00c6ff);
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform .25s, box-shadow .25s;
+            user-select: none;
+        }
+        .item:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0,0,0,.22); }
+        .item:active { transform: translateY(0); }
+        .note { margin-top: 22px; font-size: 12px; color: #666; opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <h1>21天阅读习惯养成</h1>
+        <div class="menu">
+              <!-- 第一阶段分隔 -->
+              <p style="margin:18px 0 4px;font-size:14px;color:#15202b;font-weight:600;opacity:.9;">-- 第一阶段 --</p>
+            <div class="item" onclick="location.href='https://tjjacdso0j.jiandaoyun.com/f/684aa0b6557927b5fd72fed4'">① “悦”读印记</div>
+            <div class="item" onclick="location.href='https://tjjacdso0j.jiandaoyun.com/f/6856afb9a029be12553013d0'">② 阅读周报</div>
+            <div class="item" onclick="location.href='https://tjjacdso0j.jiandaoyun.com/f/6856b3f555c4064311e525fa'">③ 21天阅读总结</div>
+            <!-- 第二阶段分隔 -->
+            <p style="margin:18px 0 4px;font-size:14px;color:#15202b;font-weight:600;opacity:.9;">-- 第二阶段 --</p>
+            <div class="item phase2" data-url="">④ 创意书签设计</div>
+            <div class="item phase2" data-url="">⑤ 采访"我心目中最美读书人"</div>
+            <div class="item phase2" data-url="">⑥ 最具创意共读家庭</div>
+        </div>
+        <p class="note"> </p>
+    </div>
+    <script>
+        // 处理第二阶段点击逻辑：若未配置链接，则提示资格要求
+        document.querySelectorAll('.phase2').forEach(function(item){
+            item.addEventListener('click',function(){
+                var url = item.dataset.url;
+                if(url && url.trim() !== ''){
+                    location.href = url;
+                }else{
+                    alert('第二阶段活动需要第一阶段全部符合的读者才有资格参加');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

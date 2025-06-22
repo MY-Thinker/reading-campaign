@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>书香沁夏 韵满丰润</title>
+    <style>
+        /* 引入毛笔书法字体（Google Fonts：Ma Shan Zheng）*/
+        @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            /* 新的蓝色天空渐变背景 */
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 新的背景图片，替换为上面提供的草地读书图片 */
+            background-image: url('./background_summer.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 375px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .title,
+        .subtitle {
+            font-family: 'Ma Shan Zheng', 'KaiTi', 'STKaiti', serif;
+            color: #15202b; /* 深墨色，贴合书法效果 */
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.45);
+        }
+
+        .title {
+            font-size: 32px;
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            opacity: 0.95;
+        }
+
+        /* 活动区 - 自适应居中布局 */
+        .activity-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center; /* 使奇数张时最后一张自动居中 */
+            margin-bottom: 30px;
+        }
+
+        /* 每张卡片宽度在 200-240px 之间自适应，整体更宽敞 */
+        .activity-card {
+            flex: 1 1 220px; /* basis 220px，允许收缩与放大 */
+            max-width: 240px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 180, 255, 0.25);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .activity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4facfe, #00c6ff);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(118, 75, 162, 0.4);
+        }
+
+        .activity-card:active {
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            color: #009dff;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.2;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .decorative-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        .star:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .star:nth-child(2) { top: 30%; left: 80%; animation-delay: 0.5s; }
+        .star:nth-child(3) { top: 60%; left: 15%; animation-delay: 1s; }
+        .star:nth-child(4) { top: 80%; left: 70%; animation-delay: 1.5s; }
+        .star:nth-child(5) { top: 15%; left: 60%; animation-delay: 0.3s; }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .floating-book {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-book:nth-child(6) { top: 25%; left: 5%; animation-delay: 0s; }
+        .floating-book:nth-child(7) { top: 45%; left: 85%; animation-delay: 2s; }
+        .floating-book:nth-child(8) { top: 70%; left: 10%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 320px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .activity-card {
+                padding: 15px 10px;
+                min-height: 100px;
+            }
+            
+            .card-icon {
+                font-size: 28px;
+            }
+            
+            .card-title {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 376px) {
+            .container {
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .activity-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <div class="decorative-elements">
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="star"></div>
+        <div class="floating-book">📚</div>
+        <div class="floating-book">📖</div>
+        <div class="floating-book">📘</div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="title">书香沁夏 韵满丰润</h1>
+        </div>
+
+        <div class="activity-grid">
+            <div class="activity-card" onclick="openLink('https://tjjacdso0j.jiandaoyun.com/f/68501549f6c91e91d8258490')">
+                <div class="card-icon">🌟</div>
+                <div class="card-title">阅读达人报名</div>
+                <div class="card-desc">点击报名参与</div>
+            </div>
+
+            <div class="activity-card" onclick="openLink('habit21.html')">
+                <div class="card-icon">📅</div>
+                <div class="card-title">21天阅读习惯养成</div>
+                <div class="card-desc">学生专属计划</div>
+            </div>
+
+            <div class="activity-card" onclick="openLink('https://tjjacdso0j.jiandaoyun.com/f/68539cb48093b13eef32e048')">
+                <div class="card-icon">👩‍🏫</div>
+                <div class="card-title">教师阅读</div>
+                <div class="card-desc">教育者成长</div>
+            </div>
+
+            <div class="activity-card" onclick="openLink('https://tjjacdso0j.jiandaoyun.com/f/68569d9fd1852943d2d29354')">
+                <div class="card-icon">🏫</div>
+                <div class="card-title">加入我们，让阅读"声"入人心！阅读推广大使招募</div>
+                <div class="card-desc">校园书香活动</div>
+            </div>
+
+            
+
+            <div class="activity-card" onclick="openLink('wanli.html')">
+                <div class="card-icon">📚</div>
+                <div class="card-title">书行万里：读·旅·学·用线下活动</div>
+                <div class="card-desc">精彩活动等你来</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">让阅读成为习惯，让书香伴随成长</p>
+            <p class="footer-text">📖 丰润区阅读推广活动 📖</p>
+        </div>
+    </div>
+
+    <script>
+        // 链接跳转函数
+        function openLink(url) {
+            // 占位链接校验
+            const placeholders = [
+                'LINK_2_PLACEHOLDER',
+                'LINK_4_PLACEHOLDER',
+                'LINK_5_PLACEHOLDER'
+            ];
+
+            if (placeholders.includes(url)) {
+                alert('该链接尚未配置，请联系管理员设置简道云表单链接');
+                return;
+            }
+
+            // 直接跳转，无论是否在微信环境
+            window.location.href = url;
+        }
+
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加触摸反馈
+            const cards = document.querySelectorAll('.activity-card');
+            cards.forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(-2px) scale(0.98)';
+                });
+                
+                card.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+
+            // 防止页面缩放
+            document.addEventListener('touchstart', function(event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                }
+            });
+
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = (new Date()).getTime();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+        });
+
+        // 微信分享配置（如果需要）
+        if (typeof wx !== 'undefined') {
+            wx.ready(function() {
+                wx.onMenuShareTimeline({
+                    title: '书香沁夏、韵满丰润 - 丰润区阅读推广活动',
+                    link: window.location.href,
+                    imgUrl: './background.jpg',
+                    success: function() {
+                        console.log('分享成功');
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html> 
