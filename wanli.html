@@ -2,34 +2,141 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>书行万里</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>书行万里·学用并举</title>
     <style>
-        body{
-            margin:0;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            min-height:100vh;
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
-            background:linear-gradient(180deg,#4facfe 0%,#00f2fe 100%);
-            color:#ffffff;
-            text-align:center;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(180deg, #4facfe 0%, #00f2fe 100%); color: #ffffff; padding: 20px;
+            position: relative; overflow-x: hidden;
         }
-        .wrap{
-            backdrop-filter:blur(4px);
-            background:rgba(0,0,0,.25);
-            padding:40px 30px;
-            border-radius:20px;
-            box-shadow:0 10px 30px rgba(0,0,0,.2);
+        .bubble {
+            position: absolute; background: rgba(255, 255, 255, 0.15); border-radius: 50%;
+            animation: float 8s infinite ease-in-out; z-index: 1;
         }
-        h1{font-size:22px;margin-bottom:18px;}
-        p{font-size:15px;line-height:1.5;}
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(15deg); }
+        }
+        .container {
+            width: 100%; max-width: 800px; padding: 20px; display: flex;
+            flex-direction: column; gap: 30px; position: relative; z-index: 10;
+        }
+        .card-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; }
+        .card {
+            flex: 1; min-width: 300px; backdrop-filter: blur(4px); background: rgba(0, 0, 0, .25);
+            border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, .2); padding: 30px;
+            transition: all 0.4s ease; cursor: pointer; display: flex; flex-direction: column;
+            overflow: hidden; position: relative; animation: slideUp 0.8s ease-out;
+        }
+        .card:hover {
+            transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, .3);
+        }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card-icon { font-size: 48px; margin-bottom: 20px; text-align: center; color: #fff; }
+        .card h2 { font-size: 24px; margin-bottom: 15px; text-align: center; color: #fff; }
+        .card h3 { font-size: 18px; font-weight: 500; margin-bottom: 15px; text-align: center; color: rgba(255, 255, 255, 0.9); }
+        .card p { font-size: 16px; line-height: 1.6; margin-bottom: 25px; color: rgba(255, 255, 255, 0.9); text-align: center; flex-grow: 1; }
+        .card .btn {
+            display: inline-block; padding: 12px 30px; background: rgba(255, 255, 255, 0.2); color: white;
+            text-decoration: none; border-radius: 50px; font-weight: 500; text-align: center;
+            transition: all 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px); margin-top: auto;
+        }
+        .card .btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+        .info-card {
+            backdrop-filter: blur(4px); background: rgba(0, 0, 0, .25); border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .2); padding: 30px; text-align: center;
+            animation: fadeIn 1.2s ease-out;
+        }
+        .info-card h2 { font-size: 22px; margin-bottom: 15px; color: #fff; }
+        .info-card p { font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        footer { text-align: center; padding: 20px; color: rgba(255, 255, 255, 0.7); font-size: 14px; margin-top: 20px; }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .card-container { flex-direction: column; }
+            .card { min-width: 100%; padding: 25px 20px; }
+            .card-icon { font-size: 40px; margin-bottom: 15px; }
+            .card h2 { font-size: 22px; }
+            .card h3 { font-size: 17px; }
+            .card p { font-size: 15px; }
+            .card .btn { padding: 10px 25px; font-size: 15px; }
+            .info-card { padding: 25px 20px; }
+            .info-card h2 { font-size: 20px; }
+            .info-card p { font-size: 15px; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 15px; }
+            .container { padding: 15px; gap: 20px; }
+            .card-container { gap: 20px; }
+            .card { padding: 20px 15px; }
+            .card-icon { font-size: 36px; }
+            .card h2 { font-size: 20px; }
+            .card h3 { font-size: 16px; margin-bottom: 12px; }
+            .card p { font-size: 14px; margin-bottom: 20px; }
+            .info-card { padding: 20px 15px; }
+        }
     </style>
 </head>
 <body>
-    <div class="wrap">
-        <p>线上活动结束之后<br>我们将择优推荐线下活动<br>敬请期待！</p>
+    <div class="bubble" style="width: 80px; height: 80px; top: 10%; left: 5%;"></div>
+    <div class="bubble" style="width: 120px; height: 120px; top: 70%; left: 85%;"></div>
+    <div class="bubble" style="width: 60px; height: 60px; top: 20%; left: 90%;"></div>
+    <div class="bubble" style="width: 100px; height: 100px; top: 85%; left: 15%;"></div>
+    
+    <div class="container">
+        <div class="card-container">
+            <div class="card" onclick="window.open('https://mp.weixin.qq.com/s/FsbWUXdfsRxrDjNaiJWY4A', '_blank')">
+                <div class="card-icon">📚</div>
+                <h2>书行万里·学用并举</h2>
+                <h3>科学运动会精华页</h3>
+                <p>探索科学运动会的精彩瞬间与核心内容，了解活动亮点与知识精华，激发学习兴趣与探索精神。</p>
+                <a href="https://mp.weixin.qq.com/s/FsbWUXdfsRxrDjNaiJWY4A" class="btn" target="_blank">查看精华内容</a>
+            </div>
+            <div class="card" onclick="window.open('https://sk4qmzcqho.jiandaoyun.com/f/6882c1df665c2ab994831bf4', '_blank')">
+                <div class="card-icon">✍️</div>
+                <h2>读学践悟</h2>
+                <h3>我的科学运动会成长与思考</h3>
+                <p>分享您在科学运动会中的学习心得、实践体验与成长感悟，与其他参与者交流思想，共同进步。</p>
+                <a href="https://sk4qmzcqho.jiandaoyun.com/f/6882c1df665c2ab994831bf4" class="btn" target="_blank">提交心得体会</a>
+            </div>
+        </div>
+        <div class="info-card">
+            <h2>活动说明</h2>
+            <p>线上活动结束之后，我们将择优推荐线下活动，敬请期待！</p>
+        </div>
+        <footer><p>书行万里</p></footer>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 12; i++) {
+                const size = Math.random() * 60 + 20;
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.top = `${Math.random() * 100}%`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                body.appendChild(bubble);
+            }
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => { this.style.transform = ''; }, 200);
+                });
+            });
+        });
+    </script>
 </body>
-</html> 
+</html>
